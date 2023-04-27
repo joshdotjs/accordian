@@ -80,7 +80,11 @@ const App = () => {
           onClick={() => f(i)}
         >
           <div className="q-container">
-            <h5 className="q">{q}</h5>
+            <h5 className="q">
+              {q}
+
+              <p className="a">{a}</p>
+            </h5>
 
             <div className="arrow-container">
               <svg
@@ -100,7 +104,6 @@ const App = () => {
             </div>
           </div>
 
-          <p className="a">{a}</p>
         </div>
       ))}
     </div>
