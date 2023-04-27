@@ -11,5 +11,9 @@ rows.forEach((row, idx) => {
   row.addEventListener('click', (e) => {
 
     console.log('clicked row: ', idx);
+
+    gsap.to(row, {
+      x: '100px'
+    });
   });
 });
