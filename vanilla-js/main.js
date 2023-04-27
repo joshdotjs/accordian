@@ -10,11 +10,11 @@ console.log('rows: ', rows);
 
 
 let prev_idx;
-let tl_prev;
+let tl_prev = null;
 
 // ==============================================
 
-rows.forEach((row, i) => {
+rows.forEach((row, idx) => {
   
   const a = row.querySelector('.a');
   const arrow = row.querySelector('.arrow');
@@ -24,37 +24,47 @@ rows.forEach((row, i) => {
   console.log('arrow: ', arrow);
   console.log('height: ', height);
   
+  // --------------------------------------------
+
   row.addEventListener('click', (e) => {
 
-    console.log('clicked row: ', i);
+    console.log('clicked row: ', idx);
 
-    const tl = gsap.timeline();
-    const duration = 0.33;
+    if (tl_prev !== null) tl_prev.reverse();
 
-    tl.to(arrow, {
-      rotate: "180deg",
-      onStart: () => {
-        // disableClicks();
-      },
-      duration
-    });
+    if (idx !== prev_idx) {
 
-    tl.to(
-      row,
-      {
-        height: `${height}px`,
-        color: "#40bf57",
-        onComplete: () => {
-          // tl_prev.current = tl;
-          // prev_idx.current = idx;
-          // enableClicks();
+      const tl = gsap.timeline();
+      const duration = 0.33;
+
+      tl.to(arrow, {
+        rotate: "180deg",
+        onStart: () => {
+          // disableClicks();
         },
         duration
-      },
-      "<="
-    );
+      });
+
+      tl.to(
+        row,
+        {
+          height: `${height}px`,
+          color: "#40bf57",
+          onComplete: () => {
+            tl_prev = tl;
+            prev_idx = idx;
+            // enableClicks();
+          },
+          duration
+        },
+        "<="
+      );
+    }
 
   });
+
+  //---------------------------------------------
+  
 });
 
 // ==============================================
