@@ -59,7 +59,10 @@ rows.forEach((row, idx) => {
         },
         "<="
       );
-    }
+    } else {
+      prev_idx = null; // allow to click same element after reverse on itself
+      tl_prev = null; // don't reverse twice in a row
+    } // if / else
 
   });
 
