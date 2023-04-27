@@ -1,3 +1,10 @@
+// ************************************
+// ************************************
+// ************************************
+// ************************************
+// TODO: Make responsive (adjust for re-sizing of window)
+//       -See vanilla VS version for reference.
+
 import { useRef } from "react";
 import gsap from "gsap";
 
