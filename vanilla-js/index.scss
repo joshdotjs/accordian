@@ -19,7 +19,7 @@ body {
     margin-bottom: 2rem;
   }
 
-  .row { position: relative;
+  .row {
     
     width: 100%;
     padding: 1rem;
@@ -39,14 +39,26 @@ body {
       justify-content: space-between;
       // margin-bottom: 1rem;
 
-      .q {
+      .q { position: relative; background: hotpink;
         font-size: 1rem;
         font-weight: 400;
+        width: 100%;
   
         // // text ellipses on overflow w. no-wrap:
         // white-space: nowrap;
         // overflow: hidden;
         // text-overflow: ellipsis;
+
+        .a { position: absolute;
+          bottom: -1rem;
+          transform: translateY(100%);
+          // margin-top: 1rem; 
+          margin-right: 1rem;
+          font-size: 1rem;
+          font-weight: 300;
+          color: black;
+          background: limegreen;
+        }
       }
       
   
@@ -61,13 +73,7 @@ body {
 
 
   
-    .a { position: absolute;
-      margin-top: 1rem; 
-      margin-right: 1rem;
-      font-size: 1rem;
-      font-weight: 300;
-      color: black;
-    }
+
 
   }
 }

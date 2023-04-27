@@ -20,7 +20,6 @@ body {
   margin-bottom: 2rem;
 }
 #faq .row {
-  position: relative;
   width: 100%;
   padding: 1rem;
   border: solid #DEE2E6 2px;
@@ -35,20 +34,25 @@ body {
   justify-content: space-between;
 }
 #faq .row .q-container .q {
+  position: relative;
+  background: hotpink;
   font-size: 1rem;
   font-weight: 400;
+  width: 100%;
+}
+#faq .row .q-container .q .a {
+  position: absolute;
+  bottom: -1rem;
+  transform: translateY(100%);
+  margin-right: 1rem;
+  font-size: 1rem;
+  font-weight: 300;
+  color: black;
+  background: limegreen;
 }
 #faq .row .q-container .arrow-container {
   width: 18px;
   height: 24px;
   display: flex;
   align-items: center;
-}
-#faq .row .a {
-  position: absolute;
-  margin-top: 1rem;
-  margin-right: 1rem;
-  font-size: 1rem;
-  font-weight: 300;
-  color: black;
 }/*# sourceMappingURL=index.css.map */
