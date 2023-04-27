@@ -8,7 +8,6 @@ console.log('rows: ', rows);
 
 // ==============================================
 
-
 let prev_idx;
 let tl_prev = null;
 
@@ -23,25 +22,30 @@ rows.forEach((row, idx) => {
   console.log('row: ', row);
   console.log('arrow: ', arrow);
   console.log('height: ', height);
+
+  const disableClick = () => row.style.pointerEvents = "none"; // disable clicks
+  const enableClick  = () => row.style.pointerEvents = "auto"; // disable clicks
+
   
-  // --------------------------------------------
 
   row.addEventListener('click', (e) => {
 
     console.log('clicked row: ', idx);
 
-    if (tl_prev !== null) tl_prev.reverse();
+    if (tl_prev !== null) {
+      disableClick();
+      tl_prev.reverse();
+    }
 
     if (idx !== prev_idx) {
 
       const tl = gsap.timeline();
       const duration = 0.33;
 
+      disableClick();
+
       tl.to(arrow, {
         rotate: "180deg",
-        onStart: () => {
-          // disableClicks();
-        },
         duration
       });
 
@@ -53,7 +57,12 @@ rows.forEach((row, idx) => {
           onComplete: () => {
             tl_prev = tl;
             prev_idx = idx;
-            // enableClicks();
+            console.log('complete');
+            enableClick();
+          },
+          onReverseComplete: () => {
+            console.log('reverse complete');
+            enableClick();
           },
           duration
         },
