@@ -17,21 +17,18 @@ const App = () => {
 
   // --------------------------------------------
 
+  const disableClick = (idx) => div_refs.current[idx].style.pointerEvents = "none";
+  const enableClick  = (idx) => div_refs.current[idx].style.pointerEvents = "auto";
+
+  // --------------------------------------------
+
   const f = (idx) => {
-    if (tl_prev.current !== null) tl_prev.current.reverse();
+    if (tl_prev.current !== null) {
+      disableClick(idx);
+      tl_prev.current.reverse();
+    }
 
     if (idx !== prev_idx.current) {
-      const disableClicks = () => {
-        div_refs.current.forEach((ref_curr) => {
-          ref_curr.style.pointerEvents = "none";
-        });
-      };
-
-      const enableClicks = () => {
-        div_refs.current.forEach((ref_curr) => {
-          ref_curr.style.pointerEvents = "auto";
-        });
-      };
 
       const a = div_refs.current[idx].querySelector(".a");
       const height = div_refs.current[idx].offsetHeight + a.offsetHeight + 16; // + 1rem margin-bottom
@@ -39,11 +36,10 @@ const App = () => {
       const tl = gsap.timeline();
       const duration = 0.33;
 
+      disableClick(idx);
+
       tl.to(arrow_refs.current[idx], {
         rotate: "180deg",
-        onStart: () => {
-          disableClicks();
-        },
         duration
       });
 
@@ -55,7 +51,10 @@ const App = () => {
           onComplete: () => {
             tl_prev.current = tl;
             prev_idx.current = idx;
-            enableClicks();
+            enableClick(idx);
+          },
+          onReverseComplete: () => {
+            enableClick(idx);
           },
           duration
         },
