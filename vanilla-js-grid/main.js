@@ -106,6 +106,9 @@ load();
 // ==============================================
 
 const reset = () => {
+
+  console.log('resetting');
+
   rows.forEach((row) => {
 
     const { gsap_tl } = row;
@@ -122,4 +125,5 @@ const reset = () => {
 };
 reset();
 
-window.addEventListener("resize", debounce( reset ));
+// window.addEventListener("resize", debounce( reset ));
+window.addEventListener("resize", reset);
