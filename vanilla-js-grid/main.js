@@ -1,3 +1,7 @@
+import { debounce } from './utils.js';
+
+// ==============================================
+
 const rows = document.querySelectorAll('.row');
 
 const duration = 0.33;
@@ -7,11 +11,16 @@ const REM = 16;
 
 const h = (elem) => elem?.offsetHeight;
 
-// can set a data attribute to store if open or closed
-// -then check the data attribute to see if open or closed
-// -that avoids adding some JS state here
-// -probably better to keep the HTML in sync like this
-//  as opposed to storing all the state in JS solely.
+// -We set a data attribute to store if open or closed
+//  --then check the data attribute to see if open or closed
+//  --that avoids adding some JS state here
+//  --probably better to keep the HTML in sync like this
+//   as opposed to storing all the state in JS solely.
+
+// -When the user changes the screen size we revert 
+//  the animation to reset the styling added during the animation
+//  because the added styling is based on the previous screen size (stale data).
+//  --The simplest way to do this is to just restart all animations...
 
 // ==============================================
 
@@ -25,12 +34,17 @@ function openRow(row) {
 
   const height = `${h(q) + h(a) + 3 * REM}px`; // 2 padding + 1 gap
 
-  gsap.to(arrow, { rotate: "180deg" });
-  gsap.to( row, {
+  const tl = gsap.timeline();
+
+  tl.to(arrow, { rotate: "180deg" });
+  tl.to( row, {
       height,
       onComplete: () => row.dataset.open = true,
     },
+    "<=",
   ); // gsap.to()
+
+  row.gsap_tl = tl;
 } // openRow()
 
 // ==============================================
@@ -44,12 +58,17 @@ function closeRow(row) {
 
   const height = `${h(q) + 2 * REM}px`;
 
-  gsap.to(arrow, { rotate: "-180deg" });
-  gsap.to( row, {
+  const tl = gsap.timeline();
+
+  tl.to(arrow, { rotate: "-180deg" });
+  tl.to( row, {
       height,
       onComplete: () => row.dataset.open = '',
     },
+    "<=",
   ); // gsap.to()
+
+  row.gsap_tl = tl;
 } // closeRow()
 
 // ==============================================
@@ -75,3 +94,15 @@ rows.forEach((row, idx) => {
   }); // row.addEventListener()
 
 }); // rows.forEach()
+
+// ==============================================
+
+const reset = () => {
+  rows.forEach((row, idx) => {
+    row.dataset.open = true;
+    const { gsap_tl } = row;
+    if (gsap_tl) gsap_tl.revert();
+  });
+};
+
+window.addEventListener("resize", debounce( reset ));
