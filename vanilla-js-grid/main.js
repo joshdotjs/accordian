@@ -4,7 +4,6 @@ import { debounce } from './utils.js';
 
 const rows = document.querySelectorAll('.row');
 
-const duration = 0.33;
 const REM = 16;
 
 // ==============================================
@@ -24,7 +23,7 @@ const h = (elem) => elem?.offsetHeight;
 
 // ==============================================
 
-function openRow(row) {
+function openRow(row, duration=0.33) {
   
   // const row = rows[idx];
   const q_container = row.querySelector('.q-container');
@@ -36,10 +35,11 @@ function openRow(row) {
 
   const tl = gsap.timeline();
 
-  tl.to(arrow, { rotate: "180deg" });
+  tl.to(arrow, { rotate: "0deg", duration });
   tl.to( row, {
       height,
       onComplete: () => row.dataset.open = true,
+      duration,
     },
     "<=",
   ); // gsap.to()
@@ -49,7 +49,7 @@ function openRow(row) {
 
 // ==============================================
 
-function closeRow(row) {
+function closeRow(row, duration=0.33) {
   
   // const row = rows[idx];
   const q_container = row.querySelector('.q-container');
@@ -60,10 +60,11 @@ function closeRow(row) {
 
   const tl = gsap.timeline();
 
-  tl.to(arrow, { rotate: "-180deg" });
+  tl.to(arrow, { rotate: "180deg", duration });
   tl.to( row, {
       height,
       onComplete: () => row.dataset.open = '',
+      duration,
     },
     "<=",
   ); // gsap.to()
@@ -79,7 +80,6 @@ rows.forEach((row, idx) => {
     console.clear();
 
     const is_open = row.dataset.open;
-    console.log('is_open: ', is_open, '\ttypeof is_open: ', typeof is_open);
 
     // if we allow multiple rows to be open at once then we don't need to close the previous row
     // -hence, we can simply pass in the reference to the row to the functions to not have to search the DOM again.
@@ -97,12 +97,25 @@ rows.forEach((row, idx) => {
 
 // ==============================================
 
+// set initial state
+
+// ==============================================
+
 const reset = () => {
-  rows.forEach((row, idx) => {
-    row.dataset.open = true;
+  rows.forEach((row) => {
+
     const { gsap_tl } = row;
     if (gsap_tl) gsap_tl.revert();
+    
+    const {startOpen} = row.dataset;
+    if (startOpen) {
+      row.dataset.open = true;
+    } else {
+      row.dataset.open = '';
+      closeRow(row, 0);
+    }
   });
 };
+reset();
 
 window.addEventListener("resize", debounce( reset ));
