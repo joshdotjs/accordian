@@ -2,7 +2,8 @@ import { debounce } from './utils.js';
 
 // ==============================================
 
-const rows = document.querySelectorAll('.row');
+const accordion = document.querySelector('#accordion');
+const rows = accordion.querySelectorAll('.row');
 
 const REM = 16;
 
@@ -97,7 +98,10 @@ rows.forEach((row, idx) => {
 
 // ==============================================
 
-// set initial state
+const load = () => {
+  gsap.fromTo(accordion, { opacity: 0 }, { opacity: 1 });
+};
+load();
 
 // ==============================================
 

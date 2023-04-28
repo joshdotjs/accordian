@@ -3,23 +3,24 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-#faq {
+#accordion {
+  opacity: 0;
   width: 90%;
   max-width: 700px;
   margin: 0 auto;
 }
-#faq * {
+#accordion * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-#faq #faq-title {
+#accordion #title {
   font-weight: 400;
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
 }
-#faq .row {
+#accordion .row {
   display: grid;
   gap: 1rem;
   width: 100%;
@@ -29,27 +30,27 @@ body {
   cursor: pointer;
   overflow: hidden;
 }
-#faq .row:not(:last-child) {
+#accordion .row:not(:last-child) {
   margin-bottom: 1rem;
 }
-#faq .row .q-container {
+#accordion .row .q-container {
   background: lightblue;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-#faq .row .q-container .q {
+#accordion .row .q-container .q {
   font-size: 1rem;
   font-weight: 400;
   width: 100%;
 }
-#faq .row .q-container .arrow-container {
+#accordion .row .q-container .arrow-container {
   width: 18px;
   height: 24px;
   display: flex;
   align-items: center;
 }
-#faq .row .a {
+#accordion .row .a {
   background: lightgreen;
   width: 100%;
   font-size: 1rem;
