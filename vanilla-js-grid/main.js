@@ -1,7 +1,5 @@
 import { debounce } from './utils.js';
 
-// ==============================================
-
 const accordion = document.querySelector('#accordion');
 const rows = accordion.querySelectorAll('.row');
 
